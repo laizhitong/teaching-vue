@@ -7,39 +7,16 @@
     </header>
     <swiper :options="swiperOption">
 	    <!-- slides -->
-	    <swiper-slide>
+	    <swiper-slide v-for="item in swiperInfo" :key="item.id">
 	    	<div class="swiper-img-con">
-	    		<img class="swiper-img" src="http://img1.qunarzz.com/piao/fusion/1809/c6/2467595fffc3b302.jpg_750x200_cca13d51.jpg">
-	    	</div>
-	  	</swiper-slide>
-	   <swiper-slide>
-	    	<div class="swiper-img-con">
-	    		<img class="swiper-img" src="http://img1.qunarzz.com/piao/fusion/1810/af/30ffcf34e9819f02.jpg_750x200_736b7236.jpg">
-	    	</div>
-	  	</swiper-slide>
-	  	<swiper-slide>
-	    	<div class="swiper-img-con">
-	    		<img class="swiper-img" src="http://img1.qunarzz.com/piao/fusion/1808/70/5603e6a535062402.jpg_750x200_2c552f2c.jpg">
-	    	</div>
-	  	</swiper-slide>
-	  	<swiper-slide>
-	    	<div class="swiper-img-con">
-	    		<img class="swiper-img" src="http://img1.qunarzz.com/piao/fusion/1809/c6/2467595fffc3b302.jpg_750x200_cca13d51.jpg">
-	    	</div>
-	  	</swiper-slide>
-	  	<swiper-slide>
-	    	<div class="swiper-img-con">
-	    		<img class="swiper-img" src="http://img1.qunarzz.com/piao/fusion/1809/c6/2467595fffc3b302.jpg_750x200_cca13d51.jpg">
-	    	</div>
-	  	</swiper-slide>
-	  	<swiper-slide>
-	    	<div class="swiper-img-con">
-	    		<img class="swiper-img" src="http://img1.qunarzz.com/piao/fusion/1809/c6/2467595fffc3b302.jpg_750x200_cca13d51.jpg">
+	    		<img class="swiper-img" :src="item.imgUrl">
 	    	</div>
 	  	</swiper-slide>
 	    <div class="swiper-pagination"  slot="pagination"></div>
-
 	  </swiper>
+	  <div>
+			1231231231
+	  </div>
   </div>
 </template>
 
@@ -48,13 +25,31 @@ export default {
   name: 'Index',
   data () {
       return {
+      	swiperInfo: [],
         swiperOption: {
-        	 autoplay:true
+        	 autoplay:true,
+        	 direction: 'horizontal',
+        	 loop:true,
+        	 pagination:{
+        	 	el:'.swiper-pagination'
+        	 }
           // some swiper options/callbacks
           // 所有的参数同 swiper 官方 api 参数
           // ...
         }
       }
+    },
+    created () {
+    	this.getIndexData()
+    },
+    methods: {
+    	getIndexData () {
+    		this.$http.get("/static/index.json")
+    	  .then(this.handleGetDataSucc.bind(this))
+    	},
+    	handleGetDataSucc (res) {
+    		this.swiperInfo = res.body.data.swiper
+    	}
     }
 }
 </script>
@@ -82,7 +77,10 @@ export default {
 		text-align: center;
 	}
 	.swiper-img-con {
+		overflow: hidden;
 		width: 100%;
+		height: 0;
+		padding-bottom: 27%;
 	}
 	.swiper-img {
 		width: 100%;
