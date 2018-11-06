@@ -14,7 +14,6 @@
     	</div>
     </header>
     <swiper :options="swiperOption">
-	    <!-- slides -->
 	    <swiper-slide v-for="item in swiperInfo" :key="item.id">
 	    	<div class="swiper-img-con">
 	    		<img class="swiper-img" :src="item.imgUrl">
@@ -22,9 +21,16 @@
 	  	</swiper-slide>
 	    <div class="swiper-pagination"  slot="pagination"></div>
 	  </swiper>
-	  <div>
-			1231231231
-	  </div>
+	  <swiper>
+	    <swiper-slide v-for="(pageInfo, index) in pages" :key="index" class="icon-wrapper">
+	    	<div v-for="item in pageInfo" :key="item.id" class="icon-item">
+	    		<div class="icon-img-con">
+	    			<img class="icon-img" :src="item.imgUrl">
+	    			<span>{{item.title}}</span>
+	    		</div>
+	    	</div>
+	  	</swiper-slide>
+	  </swiper>
   </div>
 </template>
 
@@ -34,6 +40,7 @@ export default {
   data () {
       return {
       	swiperInfo: [],
+      	iconsInfo: [],
         swiperOption: {
         	 autoplay:true,
         	 direction: 'horizontal',
@@ -47,8 +54,18 @@ export default {
         }
       }
     },
-    created () {
-    	this.getIndexData()
+    computed: {
+    	pages () {
+    		const pages = []
+    		this.iconsInfo.forEach((value, index) => {
+    			let page = Math.floor(index / 8)
+    			if (!pages[page]) {
+    				pages[page] = []
+    			}
+    			pages[page].push(value)
+    		})
+    		return pages
+    	}
     },
     methods: {
     	getIndexData () {
@@ -56,8 +73,16 @@ export default {
     	  .then(this.handleGetDataSucc.bind(this))
     	},
     	handleGetDataSucc (res) {
-    		this.swiperInfo = res.body.data.swiper
+    		const body = res.body
+    		if (body && body.data && body.data.swiper) {
+    			this.swiperInfo = body.data.swiper
+    			this.iconsInfo = body.data.icons
+    		}
+    		
     	}
+    },
+    created () {
+    	this.getIndexData()
     }
 }
 </script>
@@ -116,6 +141,23 @@ export default {
 		padding-bottom: 26.55%;
 	}
 	.swiper-img {
+		width: 100%;
+	}
+	.icon-wrapper {
+
+	}
+	.icon-item {
+		box-sizing: border-box;
+		float: left;
+		width: 25%;
+		padding: .4rem;
+	}
+	.icon-img-con {
+		width: 100%;
+		height: 0;
+		padding-bottom: 100%;
+	}
+	.icon-img {
 		width: 100%;
 	}
 </style>
