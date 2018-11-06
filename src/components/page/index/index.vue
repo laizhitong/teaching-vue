@@ -2,8 +2,16 @@
   <div>
     <header class="header">
     	<div class="back iconfont">&#xe624;</div>
-    	<div class="search"></div>
-    	<div class="city">城市</div>
+    	<div class="search">
+    		<a href="#" class="jump">
+    			<i class="iconfont">&#xe86e;</i>
+    			<span>输入城市/景点/游玩主题</span>
+    		</a>
+    	</div>
+    	<div class="city">
+    		<span>城市</span>
+    		<i class="icon iconfont">&#xe79b;</i>
+    	</div>
     </header>
     <swiper :options="swiperOption">
 	    <!-- slides -->
@@ -65,22 +73,47 @@ export default {
 		line-height: .86rem;
 		text-align: center;
 	}
+
 	.search {
 		flex: 1;
+		height: .6rem;
 		margin: .14rem .18rem;
 		background: #fff;
 		border-radius: .1rem;
+		line-height: .6rem;
 	}
+	.search .jump{
+		display: block;
+		color: #e5e7ea;
+		font-size: .3rem;
+	}
+	.search .jump .iconfont{
+		font-size: .4rem;
+		position: absolute;
+		margin-left: .2rem;
+	}
+	.search .jump span{
+		display: inline-block;
+		margin-left: .7rem; 
+	}
+
 	.city {
 		width: 1.14rem;
 		line-height: .86rem;
 		text-align: center;
 	}
+	.city span{
+
+	}
+	.city .icon{
+		font-size: .2rem;
+	}
+
 	.swiper-img-con {
 		overflow: hidden;
 		width: 100%;
 		height: 0;
-		padding-bottom: 27%;
+		padding-bottom: 26.55%;
 	}
 	.swiper-img {
 		width: 100%;
