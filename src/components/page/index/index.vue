@@ -1,7 +1,7 @@
 <template>
   <div>
     <header class="header">
-    	<div class="back iconfont">&#xe624;</div>
+    	<div class="back">返回</div>
     	<div class="search"></div>
     	<div class="city">城市</div>
     </header>
@@ -49,7 +49,8 @@ export default {
   data () {
       return {
         swiperOption: {
-        	 autoplay:true
+        	 autoplay:true,
+        	 loop : true
           // some swiper options/callbacks
           // 所有的参数同 swiper 官方 api 参数
           // ...
@@ -68,7 +69,6 @@ export default {
 	.back {
 		width: .64rem;
 		line-height: .86rem;
-		text-align: center;
 	}
 	.search {
 		flex: 1;
